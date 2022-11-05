@@ -1,0 +1,10 @@
+.navbar {
+	background-color: darkred;
+	color: white;
+	grid-area: navbar;
+	padding: 20px;
+}
+
+.navbar ul {
+	list-style: none;
+}

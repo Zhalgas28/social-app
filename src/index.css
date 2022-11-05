@@ -4,8 +4,18 @@
 	box-sizing: border-box;
 }
 
+html, body {
+	min-height: 100%;
+	height: 100%;
+}
+
 body {
   font-family:'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
 }

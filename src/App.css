@@ -1,4 +1,17 @@
 .App {
 	max-width: 1120px;
 	margin: 0 auto;
+	height: 100%;
+	display: grid;
+	grid-template-rows: 60px 1fr;
+	grid-template-columns: 3fr 12fr;
+	grid-template-areas: 
+	"header header"
+	"navbar content";
+	grid-gap: 5px;
 }
+
+.content {
+	grid-area: content;
+}
+
