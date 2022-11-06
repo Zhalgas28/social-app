@@ -1,0 +1,12 @@
+.dialogs {
+	text-align: left;
+	padding: 0px 0px 0px 15px;
+}
+
+.dialogs ul li:not(:last-child) {
+	margin: 0px 0px 20px 0px;
+}
+
+.names {
+	font-size: 20px;
+}

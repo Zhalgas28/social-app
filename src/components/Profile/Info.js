@@ -1,13 +1,13 @@
-import styles from './Info.module.css'
+import styles from "./Info.module.css";
 
 function Info() {
   return (
     <div className={styles.info}>
       <div className={styles.ava}>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRNSrWvHq8b_NIsDxvRtIBlBN2-rZwFxvCvw&usqp=CAU"></img>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRNSrWvHq8b_NIsDxvRtIBlBN2-rZwFxvCvw&usqp=CAU" alt="ava"></img>
       </div>
       <div className={styles.description}>
-        <h1>Username</h1>
+        <h2>Username</h2>
         <p>
           It is a long established fact that a reader will be distracted by the
           readable content of a page when looking at its layout. The point of
@@ -20,4 +20,4 @@ function Info() {
   );
 }
 
-export default Info
+export default Info;
