@@ -3,15 +3,16 @@ import styles from "./Posts.module.css"
 import Post from './Post'
 
 
-function Posts() {
+function Posts(props) {
+	const { posts, addNewPost } = props;
+	console.log(posts)
 	return (
 		<div className={styles.posts}>
 			<h2>My Posts</h2>
-			<PostForm />
-			<Post />
-			<Post />
-			<Post />
-			<Post />
+			<PostForm addNewPost={addNewPost}/>
+			{posts.map((post) => 
+				<Post post={post} key={post.id}/>
+			)}
 		</div>
 	)
 }
