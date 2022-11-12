@@ -10,12 +10,22 @@ import { Routes, Route } from "react-router-dom";
 function App() {
   const [posts, setPosts] = useState([])
 
-	const addNewPost = (text) => {
-		const newPost = {
-			id: uuidv4(),
-			text
+	const store = {
+		_state: {
+			posts: posts
+		},
+		
+		getState() {
+			return this._state
+		},
+
+		addNewPost(text) {
+			const newPost = {
+				id: uuidv4(),
+				text
+			}
+			setPosts([...posts, newPost])
 		}
-		setPosts([...posts, newPost])
 	}
 
   return (
@@ -26,7 +36,7 @@ function App() {
         <Routes>
           <Route
             path="/profile"
-            element={<Profile addNewPost={addNewPost} posts={posts} />}
+            element={<Profile store={store} />}
           />
           <Route path="/messages" element={<Messages />} />
         </Routes>
