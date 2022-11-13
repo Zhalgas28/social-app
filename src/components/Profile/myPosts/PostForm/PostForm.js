@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { addNewPostActionCreator } from "../../../../App";
 import styles from "./PostForm.module.css";
 
 function PostForm({ dispatch }) {
@@ -6,7 +7,7 @@ function PostForm({ dispatch }) {
 
   const formHandler = (event) => {
     event.preventDefault();
-    inputText && dispatch({type: "ADD-NEW-POST", text: inputText});
+    inputText && dispatch(addNewPostActionCreator(inputText));
     setInputText("");
   };
   return (

@@ -1,6 +1,6 @@
-import PostForm from "./PostFrom";
+import PostForm from "./PostForm/PostForm";
 import styles from "./Posts.module.css";
-import Post from "./Post";
+import Post from "./Post/Post";
 
 function Posts(props) {
   const { state, dispatch } = props;

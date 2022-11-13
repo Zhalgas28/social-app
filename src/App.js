@@ -7,6 +7,13 @@ import Profile from "./components/Profile/Profile";
 import Messages from "./components/Messages/Messages";
 import { Routes, Route } from "react-router-dom";
 
+export const addNewPostActionCreator = (text) => {
+	return {
+		type: "ADD-NEW-POST",
+		text
+	} 
+}
+
 function App() {
   const [posts, setPosts] = useState([]);
 
