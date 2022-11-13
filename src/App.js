@@ -36,7 +36,7 @@ function App() {
         <Routes>
           <Route
             path="/profile"
-            element={<Profile store={store} />}
+            element={<Profile state={store.getState()} addNewPost={store.addNewPost.bind(store)} />}
           />
           <Route path="/messages" element={<Messages />} />
         </Routes>

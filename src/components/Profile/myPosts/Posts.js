@@ -3,12 +3,12 @@ import styles from "./Posts.module.css";
 import Post from "./Post";
 
 function Posts(props) {
-  const { store } = props;
+  const { state, addNewPost } = props;
   return (
     <div className={styles.posts}>
       <h2>My Posts</h2>
-      <PostForm addNewPost={store.addNewPost} />
-      {store.getState().posts.map((post) => (
+      <PostForm addNewPost={addNewPost} />
+      {state.posts.map((post) => (
         <Post post={post} key={post.id} />
       ))}
     </div>
