@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { v4 as uuidv4 } from 'uuid';
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
@@ -8,25 +8,27 @@ import Messages from "./components/Messages/Messages";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([]);
 
-	const store = {
-		_state: {
-			posts: posts
-		},
-		
-		getState() {
-			return this._state
-		},
+  const store = {
+    _state: {
+      posts: posts,
+    },
 
-		addNewPost(text) {
-			const newPost = {
-				id: uuidv4(),
-				text
-			}
-			setPosts([...posts, newPost])
-		}
-	}
+    getState() {
+      return this._state;
+    },
+
+    dispatch(action) {
+      if (action.type === "ADD-NEW-POST") {
+        const newPost = {
+          id: uuidv4(),
+          text: action.text,
+        };
+        setPosts([...posts, newPost]);
+      }
+    },
+  };
 
   return (
     <div className="App">
@@ -36,7 +38,12 @@ function App() {
         <Routes>
           <Route
             path="/profile"
-            element={<Profile state={store.getState()} addNewPost={store.addNewPost.bind(store)} />}
+            element={
+              <Profile
+                state={store.getState()}
+                dispatch={store.dispatch.bind(store)}
+              />
+            }
           />
           <Route path="/messages" element={<Messages />} />
         </Routes>
