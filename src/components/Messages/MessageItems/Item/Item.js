@@ -1,6 +1,6 @@
-import styles from './Item.module.css'
+import styles from "./Item.module.css";
 
-function Item() {
+function Item({ message }) {
   return (
     <div className={styles.item}>
       <div className={styles.ava}>
@@ -10,9 +10,9 @@ function Item() {
         />
       </div>
       <div className={styles.name}>Username</div>
-      <p className={styles.message}>Some text </p>
+      <p className={styles.message}>{message.text}</p>
     </div>
   );
 }
 
-export default Item
+export default Item;

@@ -1,18 +1,17 @@
 import styles from "./MessageItems.module.css";
-import Item from "./Item";
+import Item from "./Item/Item";
+import MessagesForm from "./MessagesForm/MessagesForm";
 
-function MessageItems() {
+function MessageItems(props) {
+	const {state, dispatch} = props;
+
   return (
     <div className={styles.items}>
-      <Item />
-      <Item />
-      <Item />
-      <Item />
+      {state.messages.map((message) => 
+				<Item key={message.id} message={message}/>
+			)}
 
-      <form className={styles.form}>
-        <input type="text" name="post" placeholder="Enter new message" />
-        <button type="Submit">Submit</button>
-      </form>
+			<MessagesForm dispatch={dispatch}/>
     </div>
   );
 }

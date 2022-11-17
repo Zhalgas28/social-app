@@ -8,18 +8,31 @@ import Messages from "./components/Messages/Messages";
 import { Routes, Route } from "react-router-dom";
 
 export const addNewPostActionCreator = (text) => {
-	return {
-		type: "ADD-NEW-POST",
-		text
-	} 
-}
+  return {
+    type: "ADD-NEW-POST",
+    text,
+  };
+};
+
+export const addNewMessageActionCreator = (text) => {
+  return {
+    type: "ADD-NEW-MESSAGE",
+    text,
+  };
+};
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   const store = {
     _state: {
-      posts: posts,
+      profilePage: {
+        posts: posts,
+      },
+      messagesPage: {
+        messages: messages,
+      },
     },
 
     getState() {
@@ -34,6 +47,15 @@ function App() {
         };
         setPosts([...posts, newPost]);
       }
+
+      if (action.type === "ADD-NEW-MESSAGE") {
+        const newMessage = {
+          id: uuidv4(),
+          userId: 1,
+          text: action.text,
+        };
+        setMessages([...messages, newMessage]);
+      }
     },
   };
 
@@ -47,12 +69,20 @@ function App() {
             path="/profile"
             element={
               <Profile
-                state={store.getState()}
+                state={store.getState().profilePage}
                 dispatch={store.dispatch.bind(store)}
               />
             }
           />
-          <Route path="/messages" element={<Messages />} />
+          <Route
+            path="/messages"
+            element={
+              <Messages
+                state={store.getState().messagesPage}
+                dispatch={store.dispatch.bind(store)}
+              />
+            }
+          />
         </Routes>
       </div>
     </div>
