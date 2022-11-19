@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
@@ -21,44 +19,8 @@ export const addNewMessageActionCreator = (text) => {
   };
 };
 
-function App() {
-  const [posts, setPosts] = useState([]);
-  const [messages, setMessages] = useState([]);
-
-  const store = {
-    _state: {
-      profilePage: {
-        posts: posts,
-      },
-      messagesPage: {
-        messages: messages,
-      },
-    },
-
-    getState() {
-      return this._state;
-    },
-
-    dispatch(action) {
-      if (action.type === "ADD-NEW-POST") {
-        const newPost = {
-          id: uuidv4(),
-          text: action.text,
-        };
-        setPosts([...posts, newPost]);
-      }
-
-      if (action.type === "ADD-NEW-MESSAGE") {
-        const newMessage = {
-          id: uuidv4(),
-          userId: 1,
-          text: action.text,
-        };
-        setMessages([...messages, newMessage]);
-      }
-    },
-  };
-
+function App(props) {
+	const { state, dispatch } = props;
   return (
     <div className="App">
       <Header />
@@ -67,20 +29,12 @@ function App() {
         <Routes>
           <Route
             path="/profile"
-            element={
-              <Profile
-                state={store.getState().profilePage}
-                dispatch={store.dispatch.bind(store)}
-              />
-            }
+            element={<Profile state={state.profilePage} dispatch={dispatch} />}
           />
           <Route
             path="/messages"
             element={
-              <Messages
-                state={store.getState().messagesPage}
-                dispatch={store.dispatch.bind(store)}
-              />
+              <Messages state={state.messagesPage} dispatch={dispatch} />
             }
           />
         </Routes>
