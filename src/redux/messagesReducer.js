@@ -1,6 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 
-export default function messagesReducer(state, action) {
+const initialState = {
+	messages: []
+}
+
+export default function messagesReducer(state = initialState, action) {
   switch (action.type) {
     case "ADD-NEW-MESSAGE":
       const newMessage = {

@@ -1,6 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 
-export default function profileReducer(state, action) {
+const initialState = {
+	posts: []
+}
+
+export default function profileReducer(state = initialState, action) {
   switch (action.type) {
     case "ADD-NEW-POST":
       const newPost = {
