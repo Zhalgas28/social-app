@@ -3,14 +3,14 @@ import styles from "./Messages.module.css";
 import MessageItems from "./MessageItems/MessageItems";
 
 function Messages(props) {
-  const { state, dispatch } = props;
-
-  return (
+  const { messages, addNewMessageText } = props;
+	
+	return (
     <div className={styles.messages}>
       <h1 className={styles.title}>Messages</h1>
       <div className={styles.messagesBody}>
         <Dialogs />
-        <MessageItems state={state} dispatch={dispatch} />
+        <MessageItems messages={messages} addNewMessageText={addNewMessageText} />
       </div>
     </div>
   );

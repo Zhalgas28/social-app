@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { addNewPostActionCreator } from "../../../../App";
 import styles from "./PostForm.module.css";
 
-function PostForm({ dispatch }) {
+function PostForm({ addNewPostText }) {
   const [inputText, setInputText] = useState("");
 
   const formHandler = (event) => {
     event.preventDefault();
-    inputText && dispatch(addNewPostActionCreator(inputText));
+    inputText && addNewPostText(inputText);
     setInputText("");
   };
+
   return (
     <form className={styles.form} onSubmit={formHandler}>
       <input

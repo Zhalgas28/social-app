@@ -1,8 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
 
+export const addNewMessageActionCreator = (text) => {
+  return {
+    type: "ADD-NEW-MESSAGE",
+    text,
+  };
+};
+
 const initialState = {
-	messages: []
-}
+  messages: [],
+};
 
 export default function messagesReducer(state = initialState, action) {
   switch (action.type) {
@@ -13,7 +20,7 @@ export default function messagesReducer(state = initialState, action) {
         text: action.text,
       };
       state.messages.push(newMessage);
-			return state
+      return state;
     default:
       return state;
   }

@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 function rerenderEntrieTree(state) {
 	root.render(
 		<BrowserRouter>
-			<App state={state} dispatch={store.dispatch.bind(store)}/>
+			<App store={store}/>
 		</BrowserRouter>
 	);
 }

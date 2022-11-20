@@ -1,8 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
 
+export const addNewPostActionCreator = (text) => {
+  return {
+    type: "ADD-NEW-POST",
+    text,
+  };
+};
+
 const initialState = {
-	posts: []
-}
+  posts: [],
+};
 
 export default function profileReducer(state = initialState, action) {
   switch (action.type) {

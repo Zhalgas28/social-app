@@ -1,13 +1,12 @@
 import { useState } from 'react'
-import { addNewMessageActionCreator } from "../../../../App";
 import styles from "./MessagesForm.module.css";
 
-function MessagesForm({ dispatch }) {
+function MessagesForm({ addNewMessageText }) {
   const [messageText, setMessageText] = useState("");
 
   const formHandler = (event) => {
     event.preventDefault();
-		messageText && dispatch(addNewMessageActionCreator(messageText))
+		messageText && addNewMessageText(messageText)
 		setMessageText("")
   };
 
