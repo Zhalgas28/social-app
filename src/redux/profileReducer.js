@@ -13,13 +13,17 @@ const initialState = {
 
 export default function profileReducer(state = initialState, action) {
   switch (action.type) {
-    case "ADD-NEW-POST":
-      const newPost = {
+    case "ADD-NEW-POST": {
+			const newPost = {
         id: uuidv4(),
         text: action.text,
       };
-      state.posts.push(newPost);
-      return state;
+
+      return {
+				...state,
+				posts: [...state.posts, newPost]
+			};
+		}
     default:
       return state;
   }

@@ -19,8 +19,11 @@ export default function messagesReducer(state = initialState, action) {
         userId: 1,
         text: action.text,
       };
-      state.messages.push(newMessage);
-      return state;
+
+      return {
+				...state,
+				messages: [...state.messages, newMessage]
+			};
     default:
       return state;
   }
