@@ -12,6 +12,9 @@ function Navbar() {
         <li>
           <Link to="/messages">Messages</Link>
         </li>
+				<li>
+          <Link to="/users">Users</Link>
+        </li>
       </ul>
     </nav>
   );

@@ -1,0 +1,9 @@
+.users {
+	background-color: darkslategray;
+	color: white;
+	padding: 20px;
+}
+
+.users > div:not(:last-child) {
+	margin: 0 auto 20px;
+}
