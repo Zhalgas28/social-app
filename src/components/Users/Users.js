@@ -1,32 +1,45 @@
-import styles from "./Users.module.css";
-import User from "./User/User";
-import React from "react";
+import User from "./User/User"
+import styles from "./Users.module.css"
 
 
-class Users extends React.Component {
-  constructor(props) {
-    super(props);
-    fetch("https://social-network.samuraijs.com/api/1.0/users")
-      .then((respone) => respone.json())
-      .then((data) => {
-        this.props.setUsers(data.items);
-      });
-  }
+function Users(props) {
+	let pagesCount = Math.ceil(
+		props.totalUsersCount / props.pageSize
+	);
 
-  render() {
-    return (
-      <div className={styles.users}>
-        {this.props.users.map((u) => (
-          <User
-            user={u}
-            follow={this.props.follow}
-            unfollow={this.props.unfollow}
-            key={u.id}
-          />
-        ))}
-      </div>
-    );
-  }
+	const pages = [];
+
+	for (let i = 1; i <= pagesCount; i++) {
+		pages.push(i);
+	}
+
+	return (
+		<div className={styles.users}>
+			<div className={styles.pagesNumbers}>
+				{pages.map((page) => {
+					return (
+						<span
+							key={page}
+							className={
+								page === props.currentPage && styles.currentPage
+							}
+							onClick={() => props.changeCurrentPageHandler(page)}
+						>
+							{page}
+						</span>
+					);
+				})}
+			</div>
+			{props.users.map((u) => (
+				<User
+					user={u}
+					follow={props.follow}
+					unfollow={props.unfollow}
+					key={u.id}
+				/>
+			))}
+		</div>
+	);
 }
 
-export default Users;
+export default Users

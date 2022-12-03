@@ -1,9 +1,8 @@
-import { v4 as uuidv4 } from "uuid";
-
-
-
 const initialState = {
   users: [],
+	currentPage: 1,
+	pageSize: 5,
+	totalUsersCount: 0,
 };
 
 export default function usersReducer(state = initialState, action) {
@@ -36,7 +35,17 @@ export default function usersReducer(state = initialState, action) {
 			return {
 				...state,
 				users: action.users
-			}	
+			}
+		case "SET-TOTAL-USERS-COUNT":
+			return {
+				...state,
+				totalUsersCount: action.totalUsersCount
+			}
+		case "SET-CURRENT-PAGE":
+			return {
+				...state,
+				currentPage: action.currentPage
+			}
 		default:
 			return state
 	}
@@ -60,5 +69,19 @@ export function setUsersAC(users) {
 	return {
 		type: "SET-USERS",
 		users,
+	}
+}
+
+export function setTotalUsersCountAC(count) {
+	return {
+		type: "SET-TOTAL-USERS-COUNT",
+		totalUsersCount: count
+	}
+}
+
+export function setCurrentPageAC(currentPage) {
+	return {
+		type: "SET-CURRENT-PAGE",
+		currentPage
 	}
 }

@@ -15,7 +15,7 @@ function User(props) {
           <div className={styles.user__username}>{user.name}</div>
         </div>
         <div className={styles.user__location}>
-          {user.location?.country}, {user.location?.city}
+          {user.location?.country} {user.location?.city}
         </div>
       </div>
       <div className={styles.user__footer}>
