@@ -1,16 +1,17 @@
 import styles from "./Post.module.css";
 
-function Post({ post }) {
+function Post(props) {
+	const { post, profile } = props;
   return (
     <div className={styles.post}>
       <div className={styles.info}>
         <div className={styles.ava}>
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRNSrWvHq8b_NIsDxvRtIBlBN2-rZwFxvCvw&usqp=CAU"
+            src={profile.photos.small}
             alt="ava"
           />
         </div>
-        <div className={styles.name}>User</div>
+        <div className={styles.name}>{profile.fullName}</div>
       </div>
       <p className={styles.text}>{post.text}</p>
     </div>

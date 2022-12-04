@@ -12,9 +12,6 @@ import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
 
 class UsersContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     this.props.toggleIsFetching(true);
@@ -68,32 +65,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    follow(userId) {
-      dispatch(followAC(userId));
-    },
+const dispatchs = {
+	follow: followAC,
+  unfollow: unfollowAC,
+  setUsers: setUsersAC,
+  setTotalUsersCount: setTotalUsersCountAC,
+  setCurrentPage: setCurrentPageAC,
+  toggleIsFetching: toggleIsFetchingAC,
+}
 
-    unfollow(userId) {
-      dispatch(unfollowAC(userId));
-    },
-
-    setUsers(users) {
-      dispatch(setUsersAC(users));
-    },
-
-    setTotalUsersCount(count) {
-      dispatch(setTotalUsersCountAC(count));
-    },
-
-    setCurrentPage(currentPage) {
-      dispatch(setCurrentPageAC(currentPage));
-    },
-
-    toggleIsFetching(isFetching) {
-      dispatch(toggleIsFetchingAC(isFetching));
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, dispatchs)(UsersContainer);

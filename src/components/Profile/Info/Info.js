@@ -1,19 +1,15 @@
 import styles from "./Info.module.css";
 
-function Info() {
+function Info({ profile }) {
   return (
     <div className={styles.info}>
       <div className={styles.ava}>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRNSrWvHq8b_NIsDxvRtIBlBN2-rZwFxvCvw&usqp=CAU" alt="ava"></img>
+        <img src={profile.photos.large} alt="ava"></img>
       </div>
       <div className={styles.description}>
-        <h2>Username</h2>
+        <h2>{profile.fullName}</h2>
         <p>
-          It is a long established fact that a reader will be distracted by the
-          readable content of a page when looking at its layout. The point of
-          using Lorem Ipsum is that it has a more-or-less normal distribution of
-          letters, as opposed to using 'Content here, content here', making it
-          look like readable English.
+          {profile.lookingForAJobDescription}
         </p>
       </div>
     </div>
