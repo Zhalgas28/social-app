@@ -9,6 +9,7 @@
 	"header header"
 	"navbar content";
 	grid-gap: 5px;
+	background-color: #fff;
 }
 
 .content {

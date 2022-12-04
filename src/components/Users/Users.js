@@ -21,9 +21,9 @@ function Users(props) {
 						<span
 							key={page}
 							className={
-								page === props.currentPage && styles.currentPage
+								page === props.currentPage ? styles.currentPage : undefined
 							}
-							onClick={() => props.changeCurrentPageHandler(page)}
+							onClick={() => props.changeCurrentPage(page)}
 						>
 							{page}
 						</span>

@@ -1,0 +1,9 @@
+.preloader {
+	background-color: white;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.preloader img {
+	background-color: white;
+}
