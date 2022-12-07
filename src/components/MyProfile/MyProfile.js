@@ -1,6 +1,6 @@
 import styles from "./Profile.module.css";
 import Info from "./Info/Info"
-import Posts from "./Posts/Posts"
+import Posts from "./myPosts/Posts"
 
 
 function Profile(props) {

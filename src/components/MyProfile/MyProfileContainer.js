@@ -2,19 +2,19 @@ import { connect } from "react-redux";
 import React from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { addNewPostAC, setProfileAC } from "../../redux/profileReducer";
-import Profile from "./Profile";
+import MyProfile from "./MyProfile";
 import Preloader from "../common/Preloader/Preloader";
 
-class ProfileContainer extends React.Component {
+class MyProfileContainer extends React.Component {
   componentDidMount() {
-    let userId = this.props.router.params.userId;
+    let userId = 2;
     fetch("https://social-network.samuraijs.com/api/1.0/profile/" + userId)
       .then((response) => response.json())
       .then((data) => this.props.setProfile(data));
   }
   render() {
     if (this.props.profile !== null) {
-      return <Profile {...this.props} />;
+      return <MyProfile {...this.props} />;
     }
     return <Preloader />;
   }
@@ -35,7 +35,7 @@ const dispatchs = {
 export default connect(
   mapStateToProps,
   dispatchs
-)(withRouter(ProfileContainer));
+)(withRouter(MyProfileContainer));
 
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {

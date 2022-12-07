@@ -13,7 +13,7 @@ function User(props) {
           <div className={styles.user__image}>
             <img src={user.photos.small !== null ? user.photos.small : DEFAULT_USER_IMG_URL} alt="ava" />
           </div>
-          <NavLink to={"profile/" + user.id}>
+          <NavLink to={"/profile/" + user.id}>
 						<div className={styles.user__username}>{user.name}</div>
 					</NavLink>
         </div>

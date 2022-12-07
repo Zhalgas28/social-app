@@ -1,0 +1,20 @@
+.form {
+	padding: 20px 0px 30px 0px;
+}
+
+.form input, .form button {
+	padding: 10px 15px;
+	margin: 10px;
+	font-size: 15px;
+	border: 0;
+	border-radius: 5px;
+}
+
+.form button {
+	transition: .2s;
+	cursor: pointer;
+}
+
+.form button:hover {
+	background-color: rgb(214, 214, 96);
+}

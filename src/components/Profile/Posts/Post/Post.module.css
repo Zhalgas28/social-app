@@ -1,0 +1,30 @@
+.post {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.info {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.ava {
+	
+}
+
+.ava img {
+	height: 50px;
+	width: 50px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.name {
+	font-size: 25px;
+}
+
+.text {
+	flex: 0 0 70%;
+}
