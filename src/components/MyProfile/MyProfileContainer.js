@@ -8,7 +8,7 @@ import { usersAPI } from "../../api/api";
 
 class MyProfileContainer extends React.Component {
   componentDidMount() {
-    let userId = 2;
+    let userId = this.props.userId;
     usersAPI.getProfile(userId)
       .then((data) => this.props.setProfile(data));
   }
@@ -24,6 +24,7 @@ const mapStateToProps = (state) => {
   return {
     posts: state.profilePage.posts,
     profile: state.profilePage.profile,
+		userId: state.auth.id
   };
 };
 

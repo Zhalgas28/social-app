@@ -9,7 +9,7 @@ function Header({ isAuth, login }) {
       <GiConcentrationOrb className={styles.logo} />
       <span>Social App</span>
       <span className={styles.isAuth}>
-        {isAuth ? login : <NavLink to={"/login"}>Login</NavLink>}
+        {isAuth ? <NavLink to={"/profile"}>{login}</NavLink> : <NavLink to={"/login"}>Login</NavLink>}
       </span>
     </header>
   );
