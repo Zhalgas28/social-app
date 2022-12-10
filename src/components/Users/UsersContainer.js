@@ -10,29 +10,25 @@ import {
 } from "../../redux/usersReducer";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import { usersAPI } from "../../api/api";
 
 class UsersContainer extends React.Component {
-
   componentDidMount() {
     this.props.toggleIsFetching(true);
-    fetch(
-      `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`
-    )
-      .then((respone) => respone.json())
+    usersAPI
+      .getUsers(this.props.currentPage, this.props.pageSize)
       .then((data) => {
-        this.props.toggleIsFetching(false);
         this.props.setUsers(data.items);
-        this.props.setTotalUsersCount(14);
+        this.props.toggleIsFetching(false);
+				this.props.setTotalUsersCount(40)
       });
   }
 
   changeCurrentPageHandler = (currentPage) => {
     this.props.setCurrentPage(currentPage);
     this.props.toggleIsFetching(true);
-    fetch(
-      `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${currentPage}`
-    )
-      .then((respone) => respone.json())
+    usersAPI
+      .getUsers(this.props.currentPage, this.props.pageSize)
       .then((data) => {
         this.props.setUsers(data.items);
         this.props.toggleIsFetching(false);
@@ -66,12 +62,12 @@ const mapStateToProps = (state) => {
 };
 
 const dispatchs = {
-	follow: followAC,
+  follow: followAC,
   unfollow: unfollowAC,
   setUsers: setUsersAC,
   setTotalUsersCount: setTotalUsersCountAC,
   setCurrentPage: setCurrentPageAC,
   toggleIsFetching: toggleIsFetchingAC,
-}
+};
 
 export default connect(mapStateToProps, dispatchs)(UsersContainer);

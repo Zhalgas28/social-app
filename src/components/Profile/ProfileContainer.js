@@ -4,12 +4,12 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { addNewPostAC, setProfileAC } from "../../redux/profileReducer";
 import Profile from "./Profile";
 import Preloader from "../common/Preloader/Preloader";
+import { usersAPI } from "../../api/api";
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
     let userId = this.props.router.params.userId;
-    fetch("https://social-network.samuraijs.com/api/1.0/profile/" + userId)
-      .then((response) => response.json())
+    usersAPI.getProfile(userId)
       .then((data) => this.props.setProfile(data));
   }
   render() {
