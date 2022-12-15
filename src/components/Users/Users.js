@@ -36,6 +36,8 @@ function Users(props) {
 					follow={props.follow}
 					unfollow={props.unfollow}
 					key={u.id}
+					followingInProcess={props.followingInProcess}
+					toggleFollowingInProcess={props.toggleFollowingInProcess}
 				/>
 			))}
 		</div>

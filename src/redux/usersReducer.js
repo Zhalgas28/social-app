@@ -4,6 +4,7 @@ const initialState = {
   pageSize: 5,
   totalUsersCount: 0,
   isFetching: false,
+  followingInProcess: [],
 };
 
 export default function usersReducer(state = initialState, action) {
@@ -54,6 +55,19 @@ export default function usersReducer(state = initialState, action) {
         ...state,
         isFetching: action.isFetching,
       };
+    case "TOGGLE-FOLLOWING-IN-PROCESS":
+      if (action.isFetching) {
+        return {
+          ...state,
+          followingInProcess: [...state.followingInProcess, action.userId],
+        };
+      }
+      return {
+        ...state,
+        followingInProcess: state.followingInProcess.filter(
+          id => id != action.userId
+        ),
+      };
     default:
       return state;
   }
@@ -98,5 +112,13 @@ export function toggleIsFetchingAC(isFetching) {
   return {
     type: "TOGGLE-IS-FETCHING",
     isFetching,
+  };
+}
+
+export function toggleFollowingInProcessAC(isFetching, userId) {
+  return {
+    type: "TOGGLE-FOLLOWING-IN-PROCESS",
+    isFetching,
+    userId,
   };
 }

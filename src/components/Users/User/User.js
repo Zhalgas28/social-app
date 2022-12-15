@@ -6,7 +6,13 @@ const DEFAULT_USER_IMG_URL =
   "https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile.png";
 
 function User(props) {
-  const { user, follow, unfollow } = props;
+  const {
+    user,
+    follow,
+    unfollow,
+    followingInProcess,
+    toggleFollowingInProcess,
+  } = props;
 
   return (
     <div className={styles.user}>
@@ -36,24 +42,35 @@ function User(props) {
         </div>
         {user.isFollowed ? (
           <button
+            disabled={followingInProcess.some((id) => id === user.id)}
             type="button"
             className={styles.follow__btn}
-            onClick={() => followAPI.unfollow(user.id).then(data => {
-							if (data.resultCode === 0) {
-								unfollow(user.id)
-							}
-						})}
+            onClick={() => {
+							toggleFollowingInProcess(true, user.id)
+              followAPI.unfollow(user.id).then((data) => {
+                if (data.resultCode === 0) {
+                  unfollow(user.id);
+									toggleFollowingInProcess(false, user.id);
+                }
+              });
+              
+            }}
           >
             Unfollow
           </button>
         ) : (
           <button
+            disabled={followingInProcess.some((id) => id === user.id)}
             className={styles.follow__btn}
-            onClick={() => followAPI.follow(user.id).then(data => {
-							if (data.resultCode === 0) {
-								follow(user.id)
-							}
-						})}
+            onClick={() => {
+							toggleFollowingInProcess(true, user.id);
+              followAPI.follow(user.id).then((data) => {
+                if (data.resultCode === 0) {
+                  follow(user.id);
+									toggleFollowingInProcess(false, user.id);
+                }
+              });
+            }}
           >
             Follow
           </button>
