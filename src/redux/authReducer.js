@@ -1,3 +1,5 @@
+import { authAPI } from "../api/api";
+
 const initialState = {
   id: null,
   email: null,
@@ -41,4 +43,14 @@ export function setIsAuthAC(isAuth) {
     type: "SET-IS-AUTH",
     isAuth,
   };
+}
+
+export const getMyUserData = () => (dispatch) => {
+	authAPI.getMyUserData().then((data) => {
+		if (data.resultCode === 0) {
+			dispatch(setIsAuthAC(true));
+			const { id, email, login } = data.data;
+			dispatch(setUserDataAC(id, email, login));
+		}
+	});
 }

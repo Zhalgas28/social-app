@@ -1,16 +1,15 @@
 import { connect } from "react-redux";
 import React from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { addNewPostAC, setProfileAC } from "../../redux/profileReducer";
+import withRouter from "../../hoc/withRouter"
+import { addNewPostAC, getProfileTC, setProfileAC } from "../../redux/profileReducer";
 import Profile from "./Profile";
 import Preloader from "../common/Preloader/Preloader";
-import { usersAPI } from "../../api/api";
+import { compose } from "redux";
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
     let userId = this.props.router.params.userId;
-    usersAPI.getProfile(userId)
-      .then((data) => this.props.setProfile(data));
+    this.props.getProfile(userId)
   }
   render() {
     if (this.props.profile !== null) {
@@ -30,20 +29,10 @@ const mapStateToProps = (state) => {
 const dispatchs = {
   addNewPostText: addNewPostAC,
   setProfile: setProfileAC,
+	getProfile: getProfileTC
 };
 
-export default connect(
-  mapStateToProps,
-  dispatchs
-)(withRouter(ProfileContainer));
-
-function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-    let location = useLocation();
-    let navigate = useNavigate();
-    let params = useParams();
-    return <Component {...props} router={{ location, navigate, params }} />;
-  }
-
-  return ComponentWithRouterProp;
-}
+export default compose(
+	withRouter,
+	connect(mapStateToProps, dispatchs),
+)(ProfileContainer)

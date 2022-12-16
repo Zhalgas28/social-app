@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { followAPI } from "../../../api/api";
 import styles from "./User.module.css";
 
 const DEFAULT_USER_IMG_URL =
@@ -8,12 +7,10 @@ const DEFAULT_USER_IMG_URL =
 function User(props) {
   const {
     user,
-    follow,
-    unfollow,
+		follow,
+		unfollow,
     followingInProcess,
-    toggleFollowingInProcess,
   } = props;
-
   return (
     <div className={styles.user}>
       <div className={styles.user__body}>
@@ -46,14 +43,7 @@ function User(props) {
             type="button"
             className={styles.follow__btn}
             onClick={() => {
-							toggleFollowingInProcess(true, user.id)
-              followAPI.unfollow(user.id).then((data) => {
-                if (data.resultCode === 0) {
-                  unfollow(user.id);
-									toggleFollowingInProcess(false, user.id);
-                }
-              });
-              
+							unfollow(user)
             }}
           >
             Unfollow
@@ -63,13 +53,7 @@ function User(props) {
             disabled={followingInProcess.some((id) => id === user.id)}
             className={styles.follow__btn}
             onClick={() => {
-							toggleFollowingInProcess(true, user.id);
-              followAPI.follow(user.id).then((data) => {
-                if (data.resultCode === 0) {
-                  follow(user.id);
-									toggleFollowingInProcess(false, user.id);
-                }
-              });
+							follow(user)
             }}
           >
             Follow

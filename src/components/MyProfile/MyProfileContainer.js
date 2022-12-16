@@ -1,16 +1,15 @@
 import { connect } from "react-redux";
 import React from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { addNewPostAC, setProfileAC } from "../../redux/profileReducer";
+import withRouter from "../../hoc/withRouter";
+import { addNewPostAC, getProfileTC, setProfileAC } from "../../redux/profileReducer";
 import MyProfile from "./MyProfile";
 import Preloader from "../common/Preloader/Preloader";
-import { usersAPI } from "../../api/api";
+import { withRedirect } from "../../hoc/withRedirect";
 
 class MyProfileContainer extends React.Component {
   componentDidMount() {
     let userId = this.props.userId;
-    usersAPI.getProfile(userId)
-      .then((data) => this.props.setProfile(data));
+    this.props.getProfile(userId)
   }
   render() {
     if (this.props.profile !== null) {
@@ -31,20 +30,12 @@ const mapStateToProps = (state) => {
 const dispatchs = {
   addNewPostText: addNewPostAC,
   setProfile: setProfileAC,
+	getProfile: getProfileTC
 };
 
 export default connect(
   mapStateToProps,
   dispatchs
-)(withRouter(MyProfileContainer));
+)(withRouter(withRedirect(MyProfileContainer)));
 
-function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-    let location = useLocation();
-    let navigate = useNavigate();
-    let params = useParams();
-    return <Component {...props} router={{ location, navigate, params }} />;
-  }
 
-  return ComponentWithRouterProp;
-}

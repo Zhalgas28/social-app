@@ -1,39 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
 import {
-  followAC,
+  followTC,
   setUsersAC,
-  unfollowAC,
+  unfollowTC,
   setTotalUsersCountAC,
   setCurrentPageAC,
-  toggleIsFetchingAC,
 	toggleFollowingInProcessAC,
+	getUsersThunkCreator,
 } from "../../redux/usersReducer";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
-import { usersAPI } from "../../api/api";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
-    this.props.toggleIsFetching(true);
-    usersAPI
-      .getUsers(this.props.currentPage, this.props.pageSize)
-      .then((data) => {
-        this.props.setUsers(data.items);
-        this.props.toggleIsFetching(false);
-				this.props.setTotalUsersCount(40)
-      });
+    this.props.getUsers(this.props.currentPage, this.props.pageSize)
   }
 
   changeCurrentPageHandler = (currentPage) => {
     this.props.setCurrentPage(currentPage);
-    this.props.toggleIsFetching(true);
-    usersAPI
-      .getUsers(this.props.currentPage, this.props.pageSize)
-      .then((data) => {
-        this.props.setUsers(data.items);
-        this.props.toggleIsFetching(false);
-      });
+    this.props.getUsers(this.props.currentPage, this.props.pageSize)
   };
 
   render() {
@@ -64,13 +50,13 @@ const mapStateToProps = (state) => {
 };
 
 const dispatchs = {
-  follow: followAC,
-  unfollow: unfollowAC,
+  follow: followTC,
+  unfollow: unfollowTC,
   setUsers: setUsersAC,
   setTotalUsersCount: setTotalUsersCountAC,
   setCurrentPage: setCurrentPageAC,
-  toggleIsFetching: toggleIsFetchingAC,
 	toggleFollowingInProcess: toggleFollowingInProcessAC,
+	getUsers: getUsersThunkCreator
 };
 
 export default connect(mapStateToProps, dispatchs)(UsersContainer);

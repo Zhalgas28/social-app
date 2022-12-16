@@ -1,3 +1,5 @@
+import { usersAPI, followAPI } from "../api/api";
+
 const initialState = {
   users: [],
   currentPage: 1,
@@ -65,7 +67,7 @@ export default function usersReducer(state = initialState, action) {
       return {
         ...state,
         followingInProcess: state.followingInProcess.filter(
-          id => id != action.userId
+          (id) => id !== action.userId
         ),
       };
     default:
@@ -121,4 +123,33 @@ export function toggleFollowingInProcessAC(isFetching, userId) {
     isFetching,
     userId,
   };
+}
+
+export const getUsersThunkCreator = (currentPage, pageSize) => (dispatch) => {
+  dispatch(toggleIsFetchingAC(true));
+  usersAPI.getUsers(currentPage, pageSize).then((data) => {
+    dispatch(setUsersAC(data.items));
+    dispatch(toggleIsFetchingAC(false));
+    dispatch(setTotalUsersCountAC(40));
+  });
+};
+
+export const followTC = (user) => (dispatch) => {
+  dispatch(toggleFollowingInProcessAC(true, user.id));
+  followAPI.follow(user.id).then((data) => {
+    if (data.resultCode === 0) {
+      dispatch(followAC(user.id));
+      dispatch(toggleFollowingInProcessAC(false, user.id));
+    }
+  });
+};
+
+export const unfollowTC = (user) => (dispatch) => {
+	dispatch(toggleFollowingInProcessAC(true, user.id));
+  followAPI.unfollow(user.id).then((data) => {
+    if (data.resultCode === 0) {
+      dispatch(unfollowAC(user.id));
+      dispatch(toggleFollowingInProcessAC(false, user.id));
+    }
+  });
 }
