@@ -4,12 +4,12 @@ import Posts from "./myPosts/Posts"
 
 
 function Profile(props) {
-	const { profile, posts, addNewPostText } = props;
+	const { profile, posts, addNewPostText, status, updateStatus } = props;
 
   return (
     <div className={styles.profile}>
 			<h1 className={styles.title}>Profile</h1>
-      <Info profile={profile}/>
+      <Info profile={profile} status={status} updateStatus={updateStatus}/>
 			<Posts posts={posts} addNewPostText={addNewPostText} profile={profile}/>
     </div>
   );

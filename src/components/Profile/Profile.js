@@ -9,7 +9,7 @@ function Profile(props) {
   return (
     <div className={styles.profile}>
 			<h1 className={styles.title}>Profile</h1>
-      <Info profile={profile}/>
+      <Info profile={profile} />
 			<Posts posts={posts} addNewPostText={addNewPostText} profile={profile}/>
     </div>
   );

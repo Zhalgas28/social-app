@@ -1,5 +1,7 @@
 import styles from "./Post.module.css";
 
+const DEFAULT_AVATAR = "https://static.vecteezy.com/system/resources/previews/004/696/485/original/shadow-samurai-warrior-on-sunlight-vector.jpg"
+
 function Post(props) {
 	const { post, profile } = props;
   return (
@@ -7,7 +9,7 @@ function Post(props) {
       <div className={styles.info}>
         <div className={styles.ava}>
           <img
-            src={profile.photos.small}
+            src={profile.photos.small || DEFAULT_AVATAR}
             alt="ava"
           />
         </div>

@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import React from "react";
 import withRouter from "../../hoc/withRouter";
-import { addNewPostAC, getProfileTC, setProfileAC } from "../../redux/profileReducer";
+import { addNewPostAC, getProfileTC, setProfileAC, updateStatusTC } from "../../redux/profileReducer";
 import MyProfile from "./MyProfile";
 import Preloader from "../common/Preloader/Preloader";
 import { withRedirect } from "../../hoc/withRedirect";
@@ -23,14 +23,16 @@ const mapStateToProps = (state) => {
   return {
     posts: state.profilePage.posts,
     profile: state.profilePage.profile,
-		userId: state.auth.id
+		userId: state.auth.id,
+		status: state.profilePage.status
   };
 };
 
 const dispatchs = {
   addNewPostText: addNewPostAC,
   setProfile: setProfileAC,
-	getProfile: getProfileTC
+	getProfile: getProfileTC,
+	updateStatus: updateStatusTC
 };
 
 export default connect(
