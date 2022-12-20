@@ -1,0 +1,28 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.input {
+	width: 400px;
+	padding: 10px;
+}
+
+.label {
+	display: flex;
+	gap: 10px;
+}
+
+.button {
+	padding: 10px 20px;
+	font-size: 18px;
+	background-color: rgb(44, 44, 113);
+	color: white;
+	transition: .3s;
+	width: 150px;
+}
+
+.button:hover {
+	background-color: burlywood;
+}

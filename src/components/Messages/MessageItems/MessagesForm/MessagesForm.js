@@ -1,25 +1,22 @@
-import { useState } from 'react'
+import { useForm } from 'react-hook-form';
 import styles from "./MessagesForm.module.css";
 
 function MessagesForm({ addNewMessageText }) {
-  const [messageText, setMessageText] = useState("");
+	const { register, handleSubmit, reset } = useForm()
 
-  const formHandler = (event) => {
-    event.preventDefault();
-		messageText && addNewMessageText(messageText)
-		setMessageText("")
+  const formHandler = (values) => {
+		values.messageText && addNewMessageText(values.messageText)
+		reset()
   };
 
   return (
-    <form className={styles.form} onSubmit={formHandler}>
+    <form className={styles.form} onSubmit={handleSubmit(formHandler)}>
       <input
+				{...register("messageText")}
         type="text"
-        name="post"
         placeholder="Enter new message"
-        value={messageText}
-				onChange={(e) => setMessageText(e.target.value)}
       />
-      <button type="Submit">Submit</button>
+      <button>Submit</button>
     </form>
   );
 }
