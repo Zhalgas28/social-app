@@ -3,13 +3,18 @@ import { NavLink } from "react-router-dom";
 
 import styles from "./Header.module.css";
 
-function Header({ isAuth, login }) {
+function Header({ isAuth, username, logout }) {
 	return (
     <header className={styles.header}>
       <GiConcentrationOrb className={styles.logo} />
       <span>Social App</span>
       <span className={styles.isAuth}>
-        {isAuth ? <NavLink to={"/profile"}>{login}</NavLink> : <NavLink to={"/login"}>Login</NavLink>}
+        {isAuth 
+        ? <span>
+            <NavLink to={"/profile"}>{username}</NavLink>
+            <button onClick={() => logout()} >Logout</button>
+          </span> 
+        : <NavLink to={"/login"}>Login</NavLink>}
       </span>
     </header>
   );
