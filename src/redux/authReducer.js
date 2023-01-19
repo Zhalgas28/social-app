@@ -1,4 +1,3 @@
-import { redirect, useNavigate } from "react-router-dom";
 import { authAPI } from "../api/api";
 
 const initialState = {
@@ -49,7 +48,7 @@ export function setIsAuthAC(isAuth) {
 }
 
 export const getMyUserData = () => (dispatch) => {
-	authAPI.getMyUserData().then((data) => {
+	return authAPI.getMyUserData().then((data) => {
 		if (data.resultCode === 0) {
 			dispatch(setIsAuthAC(true));
 			const { id, email, login } = data.data;

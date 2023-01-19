@@ -6,20 +6,21 @@ import {
   unfollowTC,
   setTotalUsersCountAC,
   setCurrentPageAC,
-	toggleFollowingInProcessAC,
-	getUsersThunkCreator,
+  toggleFollowingInProcessAC,
+  getUsersThunkCreator,
 } from "../../redux/usersReducer";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import { getCurrentPage, getPageSize, getUsers } from "../../selectors/usersSelectors";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
-    this.props.getUsers(this.props.currentPage, this.props.pageSize)
+    this.props.getUsers(this.props.currentPage, this.props.pageSize);
   }
 
   changeCurrentPageHandler = (currentPage) => {
     this.props.setCurrentPage(currentPage);
-    this.props.getUsers(this.props.currentPage, this.props.pageSize)
+    this.props.getUsers(this.props.currentPage, this.props.pageSize);
   };
 
   render() {
@@ -40,12 +41,12 @@ class UsersContainer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    users: state.usersPage.users,
-    currentPage: state.usersPage.currentPage,
-    pageSize: state.usersPage.pageSize,
+    users: getUsers(state),
+    currentPage: getCurrentPage(state),
+    pageSize: getPageSize(state),
     totalUsersCount: state.usersPage.totalUsersCount,
     isFetching: state.usersPage.isFetching,
-		followingInProcess: state.usersPage.followingInProcess
+    followingInProcess: state.usersPage.followingInProcess,
   };
 };
 
@@ -55,8 +56,8 @@ const dispatchs = {
   setUsers: setUsersAC,
   setTotalUsersCount: setTotalUsersCountAC,
   setCurrentPage: setCurrentPageAC,
-	toggleFollowingInProcess: toggleFollowingInProcessAC,
-	getUsers: getUsersThunkCreator
+  toggleFollowingInProcess: toggleFollowingInProcessAC,
+  getUsers: getUsersThunkCreator,
 };
 
 export default connect(mapStateToProps, dispatchs)(UsersContainer);
