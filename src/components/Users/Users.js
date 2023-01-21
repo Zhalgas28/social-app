@@ -1,3 +1,4 @@
+import React from "react";
 import User from "./User/User"
 import styles from "./Users.module.css"
 
@@ -44,4 +45,4 @@ function Users(props) {
 	);
 }
 
-export default Users
+export default React.memo(Users);

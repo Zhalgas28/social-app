@@ -13,10 +13,6 @@ class MyProfileContainer extends React.Component {
 		this.props.getStatus(userId)
   }
 
-	componentDidUpdate() {
-		
-	}
-
   render() {
     if (this.props.profile !== null) {
       return <MyProfile {...this.props} />;
