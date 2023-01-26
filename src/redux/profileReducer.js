@@ -29,8 +29,19 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         status: action.status,
       };
+     case "UPDATE-PHOTO":
+      return {
+        ...state,
+        profile: action.profile
+      } 
     default:
       return state;
+  }
+}
+
+export const updatePhoto = (profile) => {
+  return {
+    type: "UPDATE-PHOTO"
   }
 }
 

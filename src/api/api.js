@@ -63,5 +63,11 @@ export const profileAPI = {
     return instance.put("profile/status", {
       status
     }).then(response => response.data)
+  },
+
+  updateAvatar(img) {
+    return instance.put("profile/photo", {
+      
+    })
   }
 }

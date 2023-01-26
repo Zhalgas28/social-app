@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
   followTC,
@@ -13,31 +13,30 @@ import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
 import { getCurrentPage, getPageSize, getUsers } from "../../selectors/usersSelectors";
 
-class UsersContainer extends React.Component {
-  componentDidMount() {
-    this.props.getUsers(this.props.currentPage, this.props.pageSize);
-  }
+function UsersContainer(props) {
+  useEffect(() => {
+    props.getUsers(props.currentPage, props.pageSize);
+  }, [])
 
-  changeCurrentPageHandler = (currentPage) => {
-    this.props.setCurrentPage(currentPage);
-    this.props.getUsers(this.props.currentPage, this.props.pageSize);
+  const changeCurrentPageHandler = (currentPage) => {
+    props.setCurrentPage(currentPage);
+    props.getUsers(props.currentPage, props.pageSize);
   };
 
-  render() {
-    return (
-      <>
-        {this.props.isFetching ? (
-          <Preloader />
-        ) : (
-          <Users
-            {...this.props}
-            changeCurrentPage={this.changeCurrentPageHandler}
-          />
-        )}
-      </>
-    );
-  }
+  return (
+    <>
+      {props.isFetching ? (
+        <Preloader />
+      ) : (
+        <Users
+          {...props}
+          changeCurrentPage={changeCurrentPageHandler}
+        />
+      )}
+    </>
+  );
 }
+
 
 const mapStateToProps = (state) => {
   return {

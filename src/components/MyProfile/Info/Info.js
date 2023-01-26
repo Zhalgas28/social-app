@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import styles from "./Info.module.css";
 
 const DEFAULT_AVATAR = "https://static.vecteezy.com/system/resources/previews/004/696/485/original/shadow-samurai-warrior-on-sunlight-vector.jpg"
@@ -13,6 +14,15 @@ function Info(props) {
         setStatus(props.status)
     }, [props.status])
 
+    const {
+        register,
+        handleSubmit
+    } = useForm()
+
+    const formHandler = (values) => {
+        props.updateAvatar(values.files[0])
+    }
+
     return (
         <div className={styles.info}>
             <div className={styles.ava}>
@@ -20,6 +30,11 @@ function Info(props) {
                     src={props.profile.photos.large || DEFAULT_AVATAR}
                     alt="ava"
                 ></img>
+                <input className={styles.setAva}
+                    {...register("newAvatar")}
+                    type="file"
+                    onChange={handleSubmit(formHandler)}
+                />
                 {!editMode ? (
                     <div onDoubleClick={() => setEditMode(true)}>
                         {status || "-------"}

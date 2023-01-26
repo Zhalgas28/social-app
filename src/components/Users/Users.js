@@ -1,36 +1,19 @@
 import React from "react";
+import Paginator from "../common/Preloader/Paginator/Paginator";
 import User from "./User/User"
 import styles from "./Users.module.css"
 
 
 function Users(props) {
-	let pagesCount = Math.ceil(
-		props.totalUsersCount / props.pageSize
-	);
-
-	const pages = [];
-
-	for (let i = 1; i <= pagesCount; i++) {
-		pages.push(i);
-	}
 
 	return (
 		<div className={styles.users}>
-			<div className={styles.pagesNumbers}>
-				{pages.map((page) => {
-					return (
-						<span
-							key={page}
-							className={
-								page === props.currentPage ? styles.currentPage : undefined
-							}
-							onClick={() => props.changeCurrentPage(page)}
-						>
-							{page}
-						</span>
-					);
-				})}
-			</div>
+			<Paginator 
+				currentPage={props.currentPage}
+				changeCurrentPage={props.changeCurrentPage}
+				totalItemsCount={props.totalUsersCount}
+				pageSize={props.pageSize}
+			/>
 			{props.users.map((u) => (
 				<User
 					user={u}
