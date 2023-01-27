@@ -9,7 +9,7 @@ class Profile extends React.Component {
     return (
       <div className={styles.profile}>
         <h1 className={styles.title}>Profile</h1>
-        <Info profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus} />
+        <Info profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus} updatePhoto={this.props.updatePhoto} />
         <Posts posts={this.props.posts} addNewPostText={this.props.addNewPostText} profile={this.props.profile} />
       </div>
     );

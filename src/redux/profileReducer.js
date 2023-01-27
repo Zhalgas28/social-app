@@ -32,16 +32,17 @@ export default function profileReducer(state = initialState, action) {
      case "UPDATE-PHOTO":
       return {
         ...state,
-        profile: action.profile
+        profile: {...state.profile, photos: action.photos}
       } 
     default:
       return state;
   }
 }
 
-export const updatePhoto = (profile) => {
+export const updatePhotoAC = (photos) => {
   return {
-    type: "UPDATE-PHOTO"
+    type: "UPDATE-PHOTO",
+    photos,
   }
 }
 
@@ -85,3 +86,11 @@ export const updateStatusTC = (status) => (dispatch) => {
     }
   });
 };
+
+export const updatePhotoTC = (photo) => async (dispatch) => {
+  const data = await profileAPI.updatePhoto(photo)
+  if (data.resultCode === 0) {
+    debugger
+    dispatch(updatePhotoAC(data.data.photos))
+  }
+}

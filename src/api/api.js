@@ -53,6 +53,18 @@ export const profileAPI = {
     });
   },
 
+  updatePhoto(photo) {
+    const formData = new FormData()
+    formData.append("image", photo)
+    return instance.put("profile/photo", formData, {
+      headers: {
+        "Content-type": "multipart/form-data"
+      }
+    }).then(response => {
+      return response.data
+    })
+  },
+
   getStatus(userId) {
     return instance.get("profile/status/" + userId).then((response) => {
       return response.data
@@ -63,11 +75,5 @@ export const profileAPI = {
     return instance.put("profile/status", {
       status
     }).then(response => response.data)
-  },
-
-  updateAvatar(img) {
-    return instance.put("profile/photo", {
-      
-    })
   }
 }

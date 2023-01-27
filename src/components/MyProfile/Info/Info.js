@@ -19,8 +19,10 @@ function Info(props) {
         handleSubmit
     } = useForm()
 
-    const formHandler = (values) => {
-        props.updateAvatar(values.files[0])
+    const formHandler = (event) => {
+        if (event.target.files[0]) {
+            props.updatePhoto(event.target.files[0])
+        }
     }
 
     return (
@@ -31,9 +33,8 @@ function Info(props) {
                     alt="ava"
                 ></img>
                 <input className={styles.setAva}
-                    {...register("newAvatar")}
                     type="file"
-                    onChange={handleSubmit(formHandler)}
+                    onChange={formHandler}
                 />
                 {!editMode ? (
                     <div onDoubleClick={() => setEditMode(true)}>

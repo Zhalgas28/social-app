@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import React from "react";
 import withRouter from "../../hoc/withRouter";
-import { addNewPostAC, getProfileTC, getStatusTC, setProfileAC, updateStatusTC } from "../../redux/profileReducer";
+import { addNewPostAC, getProfileTC, getStatusTC, setProfileAC, updatePhotoTC, updateStatusTC } from "../../redux/profileReducer";
 import MyProfile from "./MyProfile";
 import Preloader from "../common/Preloader/Preloader";
 import { withRedirect } from "../../hoc/withRedirect";
@@ -35,7 +35,8 @@ const dispatchs = {
   setProfile: setProfileAC,
 	getProfile: getProfileTC,
 	updateStatus: updateStatusTC,
-	getStatus: getStatusTC
+	getStatus: getStatusTC,
+  updatePhoto: updatePhotoTC,
 };
 
 export default connect(
