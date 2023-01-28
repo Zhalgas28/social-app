@@ -90,7 +90,18 @@ export const updateStatusTC = (status) => (dispatch) => {
 export const updatePhotoTC = (photo) => async (dispatch) => {
   const data = await profileAPI.updatePhoto(photo)
   if (data.resultCode === 0) {
-    debugger
     dispatch(updatePhotoAC(data.data.photos))
   }
+}
+
+export const updateProfileTC = (profile, setError) => (dispatch, getState) => {
+  const id = getState().auth.id
+  return profileAPI.updateProfile(profile).then((data) => {
+    if (data.resultCode === 0) {
+      dispatch(getProfileTC(id))
+    } else {
+      setError("updateProfileError", {message: data.messages[0]})
+      return Promise.reject()
+    }
+  })
 }

@@ -1,28 +1,34 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import styles from "./Info.module.css";
+import ProfileData from "./ProfileData/ProfileData";
+import ProfileDataForm from "./ProfileDataForm/ProfileDataForm";
 
 const DEFAULT_AVATAR = "https://static.vecteezy.com/system/resources/previews/004/696/485/original/shadow-samurai-warrior-on-sunlight-vector.jpg"
 
 
 function Info(props) {
     const [status, setStatus] = useState(props.status)
-    const [editMode, setEditMode] = useState(false)
+    const [statusEditMode, setStatusEditMode] = useState(false)
+    const [formEditMode, setFormEditMode] = useState(false)
 
     useEffect(() => {
         setStatus(props.status)
     }, [props.status])
 
-    const {
-        register,
-        handleSubmit
-    } = useForm()
 
     const formHandler = (event) => {
         if (event.target.files[0]) {
             props.updatePhoto(event.target.files[0])
         }
+    }
+
+    const onClickEdit = () => {
+        setFormEditMode(true)
+    }
+
+    const setFormEditModeHandler = () => {
+        setFormEditMode(false)
     }
 
     return (
@@ -36,8 +42,8 @@ function Info(props) {
                     type="file"
                     onChange={formHandler}
                 />
-                {!editMode ? (
-                    <div onDoubleClick={() => setEditMode(true)}>
+                {!statusEditMode ? (
+                    <div onDoubleClick={() => setStatusEditMode(true)}>
                         {status || "-------"}
                     </div>
                 ) : (
@@ -46,15 +52,15 @@ function Info(props) {
                         value={status}
                         onBlur={() => {
                             props.updateStatus(status)
-                            setEditMode(false);
+                            setStatusEditMode(false);
                         }}
-                        onChange={(event) => {setStatus(event.target.value)}}
+                        onChange={(event) => { setStatus(event.target.value) }}
                     />
                 )}
             </div>
             <div className={styles.description}>
-                <h2>{props.profile.fullName}</h2>
-                <p>{props.profile.lookingForAJobDescription}</p>
+                {formEditMode ? <ProfileDataForm profile={props.profile}
+                    updateProfile={props.updateProfile} setFormEditModeHandler={setFormEditModeHandler} /> : <ProfileData profile={props.profile} onClickEdit={onClickEdit} />}
             </div>
         </div>
     );

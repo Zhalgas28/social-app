@@ -4,7 +4,7 @@
 }
 
 .info > * {
-	flex: 1 0 50%;
+	flex: 0 0 50%;
 }
 
 .ava {
@@ -33,4 +33,8 @@
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+}
+
+.description > button {
+	display: inline-block;
 }
