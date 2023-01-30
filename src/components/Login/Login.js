@@ -5,7 +5,7 @@ import { login } from "../../redux/authReducer"
 import { Navigate } from "react-router-dom";
  
 
-function Login({ login, isAuth }) {
+function Login({ login, isAuth, captchaUrl }) {
   if (isAuth) {
     return <Navigate to={"/profile"} />
   }
@@ -13,13 +13,14 @@ function Login({ login, isAuth }) {
   return (
     <div className={styles.login}>
       <h1 className={styles.title}>Login</h1>
-      <LoginForm login={login} />
+      <LoginForm login={login} captchaUrl={captchaUrl} />
     </div>
   );
 }
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
+  captchaUrl: state.auth.captchaUrl
 })
 
 export default connect(mapStateToProps, {login})(Login);

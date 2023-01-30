@@ -6,7 +6,8 @@ const ProfileDataForm = ({ profile, setFormEditModeHandler, updateProfile}) => {
         register,
         handleSubmit,
         setError,
-        formState: {errors}
+        formState: {errors},
+        clearErrors
     } = useForm({ defaultValues: profile })
 
     const onSubmit = (values) => {
@@ -18,9 +19,9 @@ const ProfileDataForm = ({ profile, setFormEditModeHandler, updateProfile}) => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit, )}>
             { errors.updateProfileError && <div>{errors.updateProfileError.message}</div> }
-            <button>Save</button>
+            <button onClick={() => clearErrors()} >Save</button>
             <div>
                 <b>Full Name: </b>
                 <input {...register("fullName")} />

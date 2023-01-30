@@ -81,3 +81,11 @@ export const profileAPI = {
     return instance.put("profile", profile).then(response => response.data)
   }
 }
+
+export const securityAPI = {
+  getCaptcha() {
+    return instance.get("security/get-captcha-url").then(response => {
+      return response.data
+    })
+  }
+}

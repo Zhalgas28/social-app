@@ -1,10 +1,11 @@
-import { authAPI } from "../api/api";
+import { authAPI, securityAPI } from "../api/api";
 
 const initialState = {
   id: null,
   email: null,
   login: null,
   isAuth: false,
+  captchaUrl: null
 };
 
 export default function authReducer(state = initialState, action) {
@@ -23,8 +24,20 @@ export default function authReducer(state = initialState, action) {
 				...state,
 				isAuth: action.isAuth
 			}
+     case "GET-CAPTCHA-URL":
+      return {
+        ...state,
+        captchaUrl: action.captchaUrl
+      } 
     default:
       return state;
+  }
+}
+
+function getCaptchaUrlAC(captchaUrl) {
+  return {
+    type: "GET-CAPTCHA-URL",
+    captchaUrl,
   }
 }
 
@@ -57,13 +70,23 @@ export const getMyUserData = () => (dispatch) => {
 	});
 }
 
-export const login = (email, password, rememberMe, setError) => (dispatch) => {
-  authAPI.login(email, password, rememberMe).then(data => {
+export const login = (email, password, rememberMe = false, captcha = null, setError) => (dispatch) => {
+  authAPI.login(email, password, rememberMe, captcha).then(data => {
+    debugger
     if (data.resultCode === 0) {
       dispatch(getMyUserData())
+    } else if (data.resultCode === 10) {
+      setError("server", {type: "custom", message: data.messages[0]})
+      dispatch(getCaptchaTC())
     } else {
-      setError("server", {message: "Email or Password is incorrect"})
+      setError("server", {type: "custom", message: data.messages[0]})
     }
+  })
+}
+
+export const getCaptchaTC = () => (dispatch) => {
+  securityAPI.getCaptcha().then(data => {
+    dispatch(getCaptchaUrlAC(data.url))
   })
 }
 

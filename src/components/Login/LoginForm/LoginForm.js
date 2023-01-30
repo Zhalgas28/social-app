@@ -1,18 +1,18 @@
 import styles from "./LoginForm.module.css";
 import { useForm } from "react-hook-form";
 
-function LoginForm({ login }) {
+function LoginForm({ login, captchaUrl }) {
   const {
     register,
     handleSubmit,
     reset,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm();
 
   function onSubmit(v) {
-    login(v.email, v.password, v.remember, setError);
-    reset();
+    login(v.email, v.password, v.remember, v.captcha, setError);
   }
 
   return (
@@ -56,7 +56,13 @@ function LoginForm({ login }) {
       {errors.server && (
         <span style={{color: "red", fontSize: 20}}>{errors.server.message}</span>
       )}
-      <button className={styles.button}>Login</button>
+      { captchaUrl &&  <div>
+          <b>Введите текст из картинки:</b>
+          <div><img src={captchaUrl} alt="captcha"></img></div>
+          <div><input {...register("captcha")} /></div>
+        </div>
+      }
+      <button className={styles.button} onClick={() => clearErrors()}>Login</button>
     </form>
   );
 }
