@@ -1,6 +1,23 @@
 import { usersAPI, followAPI } from "../api/api";
 
-const initialState = {
+const FOLLOW: string = "FOLLOW"
+const UNFOLLOW: string = "UNFOLLOW"
+const SET_USERS: string = "SET-USERS"
+const SET_TOTAL_USERS_COUNT: string = "SET-TOTAL-USERS-COUNT"
+const SET_CURRENT_PAGE: string = "SET-CURRENT-PAGE"
+const TOGGLE_IS_FETCHING: string = "TOGGLE-IS-FETCHING"
+const TOGGLE_FOLLOWING_IN_PROCESS: string = "TOGGLE-FOLLOWING-IN-PROCESS"
+
+type initialStateType = {
+  users: Array<any>;
+  currentPage: number;
+  pageSize: number;
+  totalUsersCount: number;
+  isFetching: boolean;
+  followingInProcess: Array<any>;
+};
+
+const initialState: initialStateType = {
   users: [],
   currentPage: 1,
   pageSize: 5,
@@ -9,9 +26,9 @@ const initialState = {
   followingInProcess: [],
 };
 
-export default function usersReducer(state = initialState, action) {
+export default function usersReducer(state = initialState, action: any) {
   switch (action.type) {
-    case "FOLLOW":
+    case FOLLOW:
       return {
         ...state,
         users: state.users.map((u) => {
@@ -24,7 +41,7 @@ export default function usersReducer(state = initialState, action) {
           return u;
         }),
       };
-    case "UNFOLLOW":
+    case UNFOLLOW:
       return {
         ...state,
         users: state.users.map((u) => {
@@ -37,27 +54,27 @@ export default function usersReducer(state = initialState, action) {
           return u;
         }),
       };
-    case "SET-USERS":
+    case SET_USERS:
       return {
         ...state,
         users: action.users,
       };
-    case "SET-TOTAL-USERS-COUNT":
+    case SET_TOTAL_USERS_COUNT:
       return {
         ...state,
         totalUsersCount: action.totalUsersCount,
       };
-    case "SET-CURRENT-PAGE":
+    case SET_CURRENT_PAGE:
       return {
         ...state,
         currentPage: action.currentPage,
       };
-    case "TOGGLE-IS-FETCHING":
+    case TOGGLE_IS_FETCHING:
       return {
         ...state,
         isFetching: action.isFetching,
       };
-    case "TOGGLE-FOLLOWING-IN-PROCESS":
+    case TOGGLE_FOLLOWING_IN_PROCESS:
       if (action.isFetching) {
         return {
           ...state,
@@ -75,66 +92,70 @@ export default function usersReducer(state = initialState, action) {
   }
 }
 
-export function followAC(userId) {
+export function followAC(userId: string | number) {
   return {
-    type: "FOLLOW",
+    type: FOLLOW,
     userId,
   };
 }
 
-export function unfollowAC(userId) {
+export function unfollowAC(userId: string | number) {
   return {
-    type: "UNFOLLOW",
+    type: UNFOLLOW,
     userId,
   };
 }
 
-export function setUsersAC(users) {
+export function setUsersAC(users: object) {
   return {
-    type: "SET-USERS",
+    type: SET_USERS,
     users,
   };
 }
 
-export function setTotalUsersCountAC(count) {
+export function setTotalUsersCountAC(count: number) {
   return {
-    type: "SET-TOTAL-USERS-COUNT",
+    type: SET_TOTAL_USERS_COUNT,
     totalUsersCount: count,
   };
 }
 
-export function setCurrentPageAC(currentPage) {
+export function setCurrentPageAC(currentPage: number) {
   return {
-    type: "SET-CURRENT-PAGE",
+    type: SET_CURRENT_PAGE,
     currentPage,
   };
 }
 
-export function toggleIsFetchingAC(isFetching) {
+export function toggleIsFetchingAC(isFetching: boolean) {
   return {
-    type: "TOGGLE-IS-FETCHING",
+    type: TOGGLE_IS_FETCHING,
     isFetching,
   };
 }
 
-export function toggleFollowingInProcessAC(isFetching, userId) {
+export function toggleFollowingInProcessAC(
+  isFetching: boolean,
+  userId: number | string
+) {
   return {
-    type: "TOGGLE-FOLLOWING-IN-PROCESS",
+    type: TOGGLE_FOLLOWING_IN_PROCESS,
     isFetching,
     userId,
   };
 }
 
-export const getUsersThunkCreator = (currentPage, pageSize) => (dispatch) => {
-  dispatch(toggleIsFetchingAC(true));
-  usersAPI.getUsers(currentPage, pageSize).then((data) => {
-    dispatch(setUsersAC(data.items));
-    dispatch(toggleIsFetchingAC(false));
-    dispatch(setTotalUsersCountAC(data.totalCount));
-  });
-};
+export const getUsersThunkCreator =
+  (currentPage: number, pageSize: number) => (dispatch: any) => {
+    dispatch(toggleIsFetchingAC(true));
+    usersAPI.getUsers(currentPage, pageSize).then((data) => {
+      dispatch(setUsersAC(data.items));
+      dispatch(toggleIsFetchingAC(false));
+      dispatch(setTotalUsersCountAC(data.totalCount));
+    });
+  };
 
-export const followTC = (user) => (dispatch) => {
+export const followTC = (user: any) => (dispatch: any) => {
   dispatch(toggleFollowingInProcessAC(true, user.id));
   followAPI.follow(user.id).then((data) => {
     if (data.resultCode === 0) {
@@ -144,12 +165,12 @@ export const followTC = (user) => (dispatch) => {
   });
 };
 
-export const unfollowTC = (user) => (dispatch) => {
-	dispatch(toggleFollowingInProcessAC(true, user.id));
+export const unfollowTC = (user: any) => (dispatch: any) => {
+  dispatch(toggleFollowingInProcessAC(true, user.id));
   followAPI.unfollow(user.id).then((data) => {
     if (data.resultCode === 0) {
       dispatch(unfollowAC(user.id));
       dispatch(toggleFollowingInProcessAC(false, user.id));
     }
   });
-}
+};

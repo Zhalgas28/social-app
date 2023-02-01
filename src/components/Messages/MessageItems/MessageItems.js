@@ -7,8 +7,8 @@ function MessageItems(props) {
 
   return (
     <div className={styles.items}>
-      {messages.map((message) => 
-				<Item key={message.id} message={message}/>
+      {messages.map((message, id) => 
+				<Item key={id} message={message}/>
 			)}
 
 			<MessagesForm addNewMessageText={addNewMessageText}/>

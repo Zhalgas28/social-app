@@ -33,11 +33,12 @@ export const authAPI = {
     });
   },
 
-  login(email, password, rememberMe) {
+  login(email, password, rememberMe, captcha) {
     return instance.post("auth/login", {
       email,
       password,
-      rememberMe
+      rememberMe,
+      captcha
     }).then(response => response.data)
   },
 

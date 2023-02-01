@@ -8,8 +8,8 @@ function Posts(props) {
     <div className={styles.posts}>
       <h2>Posts</h2>
       <PostForm addNewPostText={addNewPostText} />
-      {posts.map((post) => (
-        <Post post={post} key={post.id} profile={profile} />
+      {posts.map((post, id) => (
+        <Post post={post} key={id} profile={profile} />
       ))}
     </div>
   );

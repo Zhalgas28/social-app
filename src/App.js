@@ -1,6 +1,6 @@
 import "./App.css";
 import { connect } from "react-redux";
-import { initializeApp } from "./redux/appReducer";
+import { initializeApp } from "./redux/appReducer.tsx";
 import React, { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import Preloader from "./components/common/Preloader/Preloader";
