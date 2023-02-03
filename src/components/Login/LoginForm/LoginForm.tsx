@@ -1,16 +1,36 @@
+import { FC } from "react"
 import styles from "./LoginForm.module.css";
 import { useForm } from "react-hook-form";
 
-function LoginForm({ login, captchaUrl }) {
+type PropsType = {
+  login: (
+    email: string,
+    password: string,
+    rememberMe: boolean | undefined,
+    captcha: string | null,
+    setError: any
+  ) => void
+  captchaUrl: string | null 
+};
+
+type InputsType = {
+  email: string
+  password: string
+  remember: boolean
+  captcha: null | string
+  server: string
+}
+
+const LoginForm: FC<PropsType> = ({ login, captchaUrl }) => {
   const {
     register,
     handleSubmit,
     setError,
     clearErrors,
     formState: { errors },
-  } = useForm();
+  } = useForm<InputsType>();
 
-  function onSubmit(v) {
+  function onSubmit(v: any) {
     login(v.email, v.password, v.remember, v.captcha, setError);
   }
 
@@ -29,7 +49,7 @@ function LoginForm({ login, captchaUrl }) {
         placeholder="Email"
       />
       {errors.email && (
-        <span style={{ color: "red" }}>{errors.email.message}</span>
+        <span style={{ color: "red" }}> {errors.email.message}</span>
       )}
       <input
         {...register("password", {
@@ -53,15 +73,24 @@ function LoginForm({ login, captchaUrl }) {
         remember me
       </label>
       {errors.server && (
-        <span style={{color: "red", fontSize: 20}}>{errors.server.message}</span>
+        <span style={{ color: "red", fontSize: 20 }}>
+          {errors.server.message}
+        </span>
       )}
-      { captchaUrl &&  <div>
+      {captchaUrl && (
+        <div>
           <b>Введите текст из картинки:</b>
-          <div><img src={captchaUrl} alt="captcha"></img></div>
-          <div><input {...register("captcha")} /></div>
+          <div>
+            <img src={captchaUrl} alt="captcha"></img>
+          </div>
+          <div>
+            <input {...register("captcha")} />
+          </div>
         </div>
-      }
-      <button className={styles.button} onClick={() => clearErrors()}>Login</button>
+      )}
+      <button className={styles.button} onClick={() => clearErrors()}>
+        Login
+      </button>
     </form>
   );
 }

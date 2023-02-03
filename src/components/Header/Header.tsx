@@ -1,9 +1,16 @@
+import { FC } from "react";
 import { GiConcentrationOrb } from "react-icons/gi";
 import { NavLink } from "react-router-dom";
 
 import styles from "./Header.module.css";
 
-function Header({ isAuth, username, logout }) {
+type PropsType = {
+  isAuth: boolean
+  username: string | null
+  logout: () => void
+}
+
+const Header: FC<PropsType> = ({ isAuth, username, logout }) => {
 	return (
     <header className={styles.header}>
       <GiConcentrationOrb className={styles.logo} />
