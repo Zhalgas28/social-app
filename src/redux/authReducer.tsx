@@ -1,4 +1,4 @@
-import { authAPI, securityAPI } from "../api/api";
+import { authAPI, resultCodeEnum, securityAPI } from "../api/api";
 
 const SET_USER_DATA: string = "SET-USER-DATA";
 const SET_IS_AUTH: string = "SET-IS-AUTH"
@@ -82,7 +82,7 @@ export function setIsAuthAC(isAuth: boolean) {
 
 export const getMyUserData = () => (dispatch: any) => {
   return authAPI.getMyUserData().then((data) => {
-    if (data.resultCode === 0) {
+    if (data.resultCode === resultCodeEnum.Success) {
       dispatch(setIsAuthAC(true));
       const { id, email, login } = data.data;
       dispatch(setUserDataAC(id, email, login, true));
@@ -101,9 +101,9 @@ export const login =
   (dispatch: any) => {
     authAPI.login(email, password, rememberMe, captcha).then((data) => {
       debugger;
-      if (data.resultCode === 0) {
+      if (data.resultCode === resultCodeEnum.Success) {
         dispatch(getMyUserData());
-      } else if (data.resultCode === 10) {
+      } else if (data.resultCode === resultCodeEnum.CaptchaError) {
         setError("server", { type: "custom", message: data.messages[0] });
         dispatch(getCaptchaTC());
       } else {
