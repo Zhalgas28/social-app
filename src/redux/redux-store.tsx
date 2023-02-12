@@ -16,6 +16,8 @@ const reducers = combineReducers({
 
 type ReducersType = typeof reducers
 export type AppStateType = ReturnType<ReducersType>
+export type InferActionsType<T> = T extends { [keys: string]: infer U } ? U : never
+
 
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -1,8 +1,8 @@
 import { authAPI, resultCodeEnum, securityAPI } from "../api/api";
 
-const SET_USER_DATA: string = "SET-USER-DATA";
-const SET_IS_AUTH: string = "SET-IS-AUTH"
-const GET_CAPTCHA_URL: string = "GET-CAPTCHA-URL"
+const SET_USER_DATA = "SET-USER-DATA";
+const SET_IS_AUTH = "SET-IS-AUTH";
+const GET_CAPTCHA_URL = "GET-CAPTCHA-URL";
 
 type initialStateType = {
   id: null | number | string;
@@ -49,43 +49,44 @@ export default function authReducer(
   }
 }
 
-function getCaptchaUrlAC(captchaUrl: string) {
-  return {
-    type: GET_CAPTCHA_URL,
-    captchaUrl,
-  };
-}
-
-export function setUserDataAC(
-  id: number | null,
-  email: string | null,
-  login: string | null,
-  isAuth: boolean | null
-) {
-  return {
-    type: SET_USER_DATA,
-    data: {
-      id,
-      email,
-      login,
+export const actions = {
+  getCaptchaUrlAC: (captchaUrl: string) => {
+    return {
+      type: GET_CAPTCHA_URL,
+      captchaUrl,
+    };
+  },
+  setUserDataAC: (
+    id: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean | null
+  ) => {
+    return {
+      type: SET_USER_DATA,
+      data: {
+        id,
+        email,
+        login,
+        isAuth,
+      },
+    } as const;
+  },
+  setIsAuthAC: (isAuth: boolean) => {
+    return {
+      type: SET_IS_AUTH,
       isAuth,
-    },
-  };
-}
+    } as const;
+  }
+};
 
-export function setIsAuthAC(isAuth: boolean) {
-  return {
-    type: SET_IS_AUTH,
-    isAuth,
-  };
-}
 
 export const getMyUserData = () => (dispatch: any) => {
   return authAPI.getMyUserData().then((data) => {
     if (data.resultCode === resultCodeEnum.Success) {
-      dispatch(setIsAuthAC(true));
+      dispatch(actions.setIsAuthAC(true));
       const { id, email, login } = data.data;
-      dispatch(setUserDataAC(id, email, login, true));
+      dispatch(actions.setUserDataAC(id, email, login, true));
     }
   });
 };
@@ -114,12 +115,13 @@ export const login =
 
 export const getCaptchaTC = () => (dispatch: any) => {
   securityAPI.getCaptcha().then((data) => {
-    dispatch(getCaptchaUrlAC(data.url));
+    dispatch(actions.getCaptchaUrlAC(data.url));
   });
 };
 
 export const logout = () => (dispatch: any) => {
   authAPI.logout().then((data) => {
-    dispatch(setUserDataAC(null, null, null, false));
+    dispatch(actions.setUserDataAC(null, null, null, false));
   });
 };
+

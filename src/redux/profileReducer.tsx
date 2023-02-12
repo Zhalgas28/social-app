@@ -1,9 +1,11 @@
+import { ThunkAction } from "redux-thunk";
 import { profileAPI } from "../api/api";
+import { AppStateType } from "./redux-store";
 
-const ADD_NEW_POST: string = "ADD-NEW-POST"
-const SET_PROFILE: string = "SET-PROFILE"
-const SET_STATUS: string = "SET-STATUS"
-const UPDATE_PHOTO: string = "UPDATE-PHOTO"
+const ADD_NEW_POST = "ADD-NEW-POST"
+const SET_PROFILE = "SET-PROFILE"
+const SET_STATUS = "SET-STATUS"
+const UPDATE_PHOTO = "UPDATE-PHOTO"
 
 type initialStateType = {
   posts: Array<any>;
@@ -19,7 +21,7 @@ const initialState: initialStateType = {
   status: "",
 };
 
-export default function profileReducer(state = initialState, action: any) {
+export default function profileReducer(state = initialState, action: ActionsTypes) {
   switch (action.type) {
     case ADD_NEW_POST:
       const newPost = {
@@ -53,43 +55,43 @@ export const updatePhotoAC = (photos: any) => {
   return {
     type: UPDATE_PHOTO,
     photos,
-  };
+  } as const;
 };
 
 export const addNewPostAC = (text: string) => {
   return {
     type: ADD_NEW_POST,
     text,
-  };
+  } as const;
 };
 
 export const setProfileAC = (profile: any) => {
   return {
     type: SET_PROFILE,
     profile,
-  };
+  } as const;
 };
 
 export const setStatusAC = (status: string) => {
   return {
     type: SET_STATUS,
     status,
-  };
+  } as const;
 };
 
-export const getProfileTC = (userId: string | number) => (dispatch: any) => {
+export const getProfileTC = (userId: string | number): ThunkType => (dispatch) => {
   profileAPI.getProfile(userId).then((data) => {
-    dispatch(setProfileAC(data));
+    dispatch(setProfileAC(data))
   });
 };
 
-export const getStatusTC = (userId: string | number) => (dispatch: any) => {
+export const getStatusTC = (userId: string | number): ThunkType => (dispatch) => {
   profileAPI.getStatus(userId).then((data) => {
     dispatch(setStatusAC(data));
   });
 };
 
-export const updateStatusTC = (status: string) => (dispatch: any) => {
+export const updateStatusTC = (status: string): ThunkType => (dispatch) => {
   profileAPI.updateStatus(status).then((data) => {
     if (data.resultCode === 0) {
       dispatch(setStatusAC(status));
@@ -97,7 +99,7 @@ export const updateStatusTC = (status: string) => (dispatch: any) => {
   });
 };
 
-export const updatePhotoTC = (photo: any) => async (dispatch: any) => {
+export const updatePhotoTC = (photo: any): ThunkType => async (dispatch) => {
   const data = await profileAPI.updatePhoto(photo);
   if (data.resultCode === 0) {
     dispatch(updatePhotoAC(data.data.photos));
@@ -105,14 +107,23 @@ export const updatePhotoTC = (photo: any) => async (dispatch: any) => {
 };
 
 export const updateProfileTC =
-  (profile: object, setError: any) => (dispatch: any, getState: any) => {
-    const id = getState().auth.id;
+  (profile: object, setError: any): ThunkType => (dispatch, getState) => {
+    const id = getState().auth.id
     return profileAPI.updateProfile(profile).then((data) => {
       if (data.resultCode === 0) {
-        dispatch(getProfileTC(id));
+        if (id !== null) {
+          dispatch(getProfileTC(id))
+        }
       } else {
         setError("updateProfileError", { message: data.messages[0] });
         return Promise.reject();
       }
     });
   };
+
+type updatePhotoType = ReturnType<typeof updatePhotoAC>
+type addNewPostType = ReturnType<typeof addNewPostAC>
+type setProfileType = ReturnType<typeof setProfileAC>
+type setStatusType = ReturnType<typeof setStatusAC>
+type ActionsTypes = updatePhotoType | addNewPostType | setProfileType | setStatusType
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsTypes>

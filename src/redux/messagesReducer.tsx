@@ -1,10 +1,3 @@
-export const addNewMessageActionCreator = (text: string) => {
-  return {
-    type: "ADD-NEW-MESSAGE",
-    text,
-  };
-};
-
 type messageType = {
   userId: number | string
   text: string
@@ -18,12 +11,21 @@ const initialState: initialStateType = {
   messages: [],
 };
 
-export default function messagesReducer(state = initialState, action: any) {
+export const addNewMessageActionCreator = (text: string) => {
+  return {
+    type: "ADD-NEW-MESSAGE",
+    text,
+  };
+};
+
+type ActionsTypes = ReturnType<typeof addNewMessageActionCreator>
+
+export default function messagesReducer(state = initialState, action: ActionsTypes) {
   switch (action.type) {
     case "ADD-NEW-MESSAGE":
       const newMessage: messageType = {
         userId: 1,
-        text: action.text,
+        text: action.text
       };
 
       return {
