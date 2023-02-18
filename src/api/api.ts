@@ -9,9 +9,16 @@ const instance = axios.create({
 });
 
 export const usersAPI = {
-  getUsers(currentPage = 1, pageSize = 10) {
+  getUsers(
+    currentPage = 1,
+    pageSize = 10,
+    term = "",
+    friend: boolean | null = null
+  ) {
     return instance
-      .get(`users?count=${pageSize}&page=${currentPage}`)
+      .get(
+        `users?count=${pageSize}&page=${currentPage}&term=${term}&friend=${friend}`
+      )
       .then((response) => response.data);
   },
 };
@@ -50,9 +57,11 @@ export const profileAPI = {
   },
 
   getStatus(userId: number | string) {
-    return instance.get("profile/status/" + userId.toString()).then((response) => {
-      return response.data;
-    });
+    return instance
+      .get("profile/status/" + userId.toString())
+      .then((response) => {
+        return response.data;
+      });
   },
 
   updateStatus(status: string) {
@@ -78,18 +87,18 @@ export const securityAPI = {
 
 type getMyUserDataType = {
   data: {
-    id: number
-    email: string
-    login: string
-  }
-  resultCode: number
-  messages: Array<string>
-}
+    id: number;
+    email: string;
+    login: string;
+  };
+  resultCode: number;
+  messages: Array<string>;
+};
 
 export const authAPI = {
   getMyUserData() {
     return instance.get<getMyUserDataType>("auth/me").then((response) => {
-      return response.data
+      return response.data;
     });
   },
 

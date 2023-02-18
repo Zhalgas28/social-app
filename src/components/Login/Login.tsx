@@ -4,7 +4,7 @@ import styles from "./Login.module.css";
 import { connect } from "react-redux";
 import { login } from "../../redux/authReducer";
 import { Navigate } from "react-router-dom";
-import { AppStateType } from "../../redux/redux-store";
+import { AppStateType } from "../../redux/redux-store"
 
 type PropsType = {
   login: (

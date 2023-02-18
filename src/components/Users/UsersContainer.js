@@ -20,7 +20,7 @@ function UsersContainer(props) {
 
   const changeCurrentPageHandler = (currentPage) => {
     props.setCurrentPage(currentPage);
-    props.getUsers(props.currentPage, props.pageSize);
+    props.getUsers(props.currentPage, props.pageSize, props.filter);
   };
 
   return (
@@ -46,6 +46,7 @@ const mapStateToProps = (state) => {
     totalUsersCount: state.usersPage.totalUsersCount,
     isFetching: state.usersPage.isFetching,
     followingInProcess: state.usersPage.followingInProcess,
+    filter: state.usersPage.filter
   };
 };
 

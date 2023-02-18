@@ -1,8 +1,14 @@
+import { FC } from "react"
 import styles from "./Post.module.css";
 
 const DEFAULT_AVATAR = "https://static.vecteezy.com/system/resources/previews/004/696/485/original/shadow-samurai-warrior-on-sunlight-vector.jpg"
 
-function Post(props) {
+type PropsType = {
+  post: any
+  profile: any
+}
+
+const Post: FC<PropsType> = (props) => {
 	const { post, profile } = props;
   return (
     <div className={styles.post}>

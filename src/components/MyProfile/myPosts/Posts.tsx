@@ -1,10 +1,15 @@
+import { FC, memo } from "react";
 import PostForm from "./PostForm/PostForm";
 import styles from "./Posts.module.css";
 import Post from "./Post/Post";
-import React from "react";
 
-function Posts(props) {  
-    console.log("RENDER");
+type PropsType = {
+  posts: Array<any>
+  profile: any
+  addNewPostText: (text: string) => void
+}
+
+const Posts: FC<PropsType> = (props) => {  
     return (
       <div className={styles.posts}>
         <h2>My Posts</h2>
@@ -17,4 +22,4 @@ function Posts(props) {
   
 }
 
-export default React.memo(Posts);
+export default memo(Posts);

@@ -1,12 +1,18 @@
 import { usersAPI, followAPI } from "../api/api";
 
-const FOLLOW: string = "FOLLOW"
-const UNFOLLOW: string = "UNFOLLOW"
-const SET_USERS: string = "SET-USERS"
-const SET_TOTAL_USERS_COUNT: string = "SET-TOTAL-USERS-COUNT"
-const SET_CURRENT_PAGE: string = "SET-CURRENT-PAGE"
-const TOGGLE_IS_FETCHING: string = "TOGGLE-IS-FETCHING"
-const TOGGLE_FOLLOWING_IN_PROCESS: string = "TOGGLE-FOLLOWING-IN-PROCESS"
+const FOLLOW: string = "FOLLOW";
+const UNFOLLOW: string = "UNFOLLOW";
+const SET_USERS: string = "SET-USERS";
+const SET_TOTAL_USERS_COUNT: string = "SET-TOTAL-USERS-COUNT";
+const SET_CURRENT_PAGE: string = "SET-CURRENT-PAGE";
+const TOGGLE_IS_FETCHING: string = "TOGGLE-IS-FETCHING";
+const TOGGLE_FOLLOWING_IN_PROCESS: string = "TOGGLE-FOLLOWING-IN-PROCESS";
+const SET_FILTER = "SET-FILTER";
+
+export type UsersFilterType = {
+  term: string;
+  isFollowed: boolean | null;
+};
 
 type initialStateType = {
   users: Array<any>;
@@ -15,6 +21,7 @@ type initialStateType = {
   totalUsersCount: number;
   isFetching: boolean;
   followingInProcess: Array<any>;
+  filter: UsersFilterType;
 };
 
 const initialState: initialStateType = {
@@ -24,6 +31,10 @@ const initialState: initialStateType = {
   totalUsersCount: 0,
   isFetching: false,
   followingInProcess: [],
+  filter: {
+    term: "",
+    isFollowed: null,
+  },
 };
 
 export default function usersReducer(state = initialState, action: any) {
@@ -87,9 +98,21 @@ export default function usersReducer(state = initialState, action: any) {
           (id) => id !== action.userId
         ),
       };
+    case SET_FILTER:
+      return {
+        ...state,
+        filter: action.payload,
+      };
     default:
       return state;
   }
+}
+
+export function setFilter(payload: UsersFilterType) {
+  return {
+    type: SET_FILTER,
+    payload,
+  };
 }
 
 export function followAC(userId: string | number) {
@@ -145,10 +168,21 @@ export function toggleFollowingInProcessAC(
   };
 }
 
+const DefaultUsersFilter = {
+  term: "",
+  isFollowed: null
+}
+
 export const getUsersThunkCreator =
-  (currentPage: number, pageSize: number) => (dispatch: any) => {
+  (
+    currentPage: number,
+    pageSize: number,
+    filter: UsersFilterType = DefaultUsersFilter
+  ) =>
+  (dispatch: any) => {
     dispatch(toggleIsFetchingAC(true));
-    usersAPI.getUsers(currentPage, pageSize).then((data) => {
+    usersAPI.getUsers(currentPage, pageSize, filter.term, filter.isFollowed).then((data) => {
+      dispatch(setFilter(filter))
       dispatch(setUsersAC(data.items));
       dispatch(toggleIsFetchingAC(false));
       dispatch(setTotalUsersCountAC(data.totalCount));
@@ -174,3 +208,4 @@ export const unfollowTC = (user: any) => (dispatch: any) => {
     }
   });
 };
+
